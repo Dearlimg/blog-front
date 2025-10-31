@@ -205,11 +205,11 @@ main {
 }
 
 .google-dot {
-    background-image: url("../../static/google-color.svg");
+    background-image: url("/static/google-color.svg");
 }
 
 .microsoft-dot {
-    background-image: url("../../static/icons8-微软.svg");
+    background-image: url("/static/icons8-微软.svg");
 }
 
 .bytedance-dot {

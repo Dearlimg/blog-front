@@ -165,7 +165,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Function to fetch messages from your backend
     function fetchMessages() {
-        return fetch("http://123.249.32.125:8002/api/message/getmessage")
+        return fetch(`${API_CONFIG.MESSAGE_BOARD_URL}/getmessage`)
             .then((response) => {
                 console.log("Raw response:", response)
                 if (!response.ok) {
@@ -222,7 +222,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Function to save a new message
     function saveMessage(messageData) {
         console.log("Sending message data:", messageData) // Debug log
-        return fetch("http://123.249.32.125:8002/api/message/postmessage", {
+        return fetch(`${API_CONFIG.MESSAGE_BOARD_URL}/postmessage`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wallet | Durlim</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/wallet.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<header>
+  <div class="logo">
+    <a href="/index.html" class="logo-text">Durlim</a>
+  </div>
+  <nav>
+    <ul class="nav-links">
+      <li><a href="/index.html" class="nav-item">Home</a></li>
+      <li><a href="/index.html#comments" class="nav-item">Comments</a></li>
+      <li><a href="/index.html#message-board" class="nav-item">Message Board</a></li>
+    </ul>
+  </nav>
+  <div class="social-links">
+    <div id="userAuthLinks" style="display: none;">
+      <span id="userName" style="margin-right: 1rem; color: var(--primary-color);"></span>
+      <a href="#" id="logoutBtn" class="social-icon" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+    <div id="guestAuthLinks">
+      <a href="login.html" class="social-icon" title="Login"><i class="fas fa-sign-in-alt"></i></a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wallet-container">
+    <h2><i class="fas fa-wallet"></i> My Wallet</h2>
+    <div id="walletNotification"></div>
+
+    <div id="walletInfo" class="wallet-info-card" style="display: none;">
+      <div class="balance-display">
+        <div class="balance-label">Balance</div>
+        <div class="balance-amount" id="balanceAmount">¥0.00</div>
+      </div>
+    </div>
+
+    <div class="wallet-actions">
+      <div class="action-section">
+        <h3>Wallet Actions</h3>
+        
+        <div class="action-card">
+          <h4><i class="fas fa-plus-circle"></i> Add Balance</h4>
+          <form id="addBalanceForm" class="wallet-form">
+            <div class="form-group">
+              <label for="addAmount">Amount</label>
+              <input type="number" id="addAmount" name="amount" step="0.01" min="0.01" required placeholder="Enter amount">
+            </div>
+            <div class="form-group">
+              <label for="addDescription">Description (optional)</label>
+              <input type="text" id="addDescription" name="description" placeholder="e.g., Account recharge">
+            </div>
+            <button type="submit" class="wallet-btn add-btn">
+              <i class="fas fa-plus"></i> Add Balance
+            </button>
+          </form>
+        </div>
+
+        <div class="action-card">
+          <h4><i class="fas fa-exchange-alt"></i> Transfer</h4>
+          <form id="transferForm" class="wallet-form">
+            <div class="form-group">
+              <label for="toUserId">To User ID</label>
+              <input type="number" id="toUserId" name="to_user_id" required placeholder="Enter user ID">
+            </div>
+            <div class="form-group">
+              <label for="transferAmount">Amount</label>
+              <input type="number" id="transferAmount" name="amount" step="0.01" min="0.01" required placeholder="Enter amount">
+            </div>
+            <div class="form-group">
+              <label for="transferDescription">Description (optional)</label>
+              <input type="text" id="transferDescription" name="description" placeholder="e.g., Transfer to friend">
+            </div>
+            <button type="submit" class="wallet-btn transfer-btn">
+              <i class="fas fa-paper-plane"></i> Transfer
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="transactions-section">
+        <h3><i class="fas fa-history"></i> Transaction History</h3>
+        <div id="transactionsList" class="transactions-list">
+          <div class="message-loading">Loading transactions...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>&copy; 2024 durlim. All rights reserved.</p>
+</footer>
+
+<script src="../JS/api-config.js"></script>
+<script src="../JS/auth.js"></script>
+<script src="../JS/wallet.js"></script>
+</body>
+</html>
+

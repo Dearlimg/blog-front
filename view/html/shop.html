@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop | Durlim</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/shop.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<header>
+  <div class="logo">
+    <a href="/index.html" class="logo-text">Durlim</a>
+  </div>
+  <nav>
+    <ul class="nav-links">
+      <li><a href="/index.html" class="nav-item">Home</a></li>
+      <li><a href="/index.html#comments" class="nav-item">Comments</a></li>
+      <li><a href="./wallet.html" class="nav-item">Wallet</a></li>
+    </ul>
+  </nav>
+  <div class="social-links">
+    <div id="userAuthLinks" style="display: none;">
+      <span id="userName" style="margin-right: 1rem; color: var(--primary-color);"></span>
+      <a href="#" id="logoutBtn" class="social-icon" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+    <div id="guestAuthLinks">
+      <a href="login.html" class="social-icon" title="Login"><i class="fas fa-sign-in-alt"></i></a>
+    </div>
+    <a href="#" id="cartIcon" class="social-icon cart-icon" title="Shopping Cart">
+      <i class="fas fa-shopping-cart"></i>
+      <span id="cartCount" class="cart-count">0</span>
+    </a>
+  </div>
+</header>
+
+<main>
+  <div class="shop-container">
+    <h2><i class="fas fa-store"></i> Shop</h2>
+    <div id="shopNotification"></div>
+
+    <!-- 购物车侧边栏 -->
+    <div id="cartSidebar" class="cart-sidebar">
+      <div class="cart-header">
+        <h3><i class="fas fa-shopping-cart"></i> Shopping Cart</h3>
+        <button class="close-cart" id="closeCart"><i class="fas fa-times"></i></button>
+      </div>
+      <div id="cartContent" class="cart-content">
+        <div class="message-loading">Loading cart...</div>
+      </div>
+      <div class="cart-footer">
+        <div class="cart-total">
+          <strong>Total: <span id="cartTotal">¥0.00</span></strong>
+        </div>
+        <button id="checkoutBtn" class="checkout-btn" disabled>
+          <i class="fas fa-credit-card"></i> Checkout
+        </button>
+      </div>
+    </div>
+    <div id="cartOverlay" class="cart-overlay"></div>
+
+    <!-- 商品列表 -->
+    <div class="products-section">
+      <div class="products-header">
+        <h3>Products</h3>
+        <div class="filter-section">
+          <input type="text" id="searchInput" placeholder="Search products..." class="search-input">
+          <select id="categoryFilter" class="category-filter">
+            <option value="">All Categories</option>
+          </select>
+        </div>
+      </div>
+      <div id="productsList" class="products-grid">
+        <div class="message-loading">Loading products...</div>
+      </div>
+    </div>
+
+    <!-- 订单历史 -->
+    <div class="orders-section" id="ordersSection" style="display: none;">
+      <h3><i class="fas fa-list-alt"></i> My Orders</h3>
+      <div id="ordersList" class="orders-list">
+        <div class="message-loading">Loading orders...</div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- 订单表单模态框 -->
+<div id="orderModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Create Order</h3>
+      <button class="close-modal" id="closeOrderModal"><i class="fas fa-times"></i></button>
+    </div>
+    <form id="orderForm" class="order-form">
+      <div class="form-group">
+        <label for="orderAddress">Address</label>
+        <input type="text" id="orderAddress" name="address" required placeholder="Enter delivery address">
+      </div>
+      <div class="form-group">
+        <label for="orderPhone">Phone</label>
+        <input type="tel" id="orderPhone" name="phone" required placeholder="Enter phone number">
+      </div>
+      <div class="form-group">
+        <label for="orderRemark">Remark (optional)</label>
+        <textarea id="orderRemark" name="remark" placeholder="Any special instructions..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Order Items</label>
+        <div id="orderItemsList" class="order-items-list"></div>
+        <div class="order-total">
+          <strong>Total: <span id="orderTotalAmount">¥0.00</span></strong>
+        </div>
+      </div>
+      <button type="submit" class="submit-order-btn">
+        <i class="fas fa-check"></i> Confirm Order
+      </button>
+    </form>
+  </div>
+</div>
+
+<footer>
+  <p>&copy; 2024 durlim. All rights reserved.</p>
+</footer>
+
+<script src="../JS/api-config.js"></script>
+<script src="../JS/auth.js"></script>
+<script src="../JS/shop.js"></script>
+</body>
+</html>
+

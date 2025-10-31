@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register | Durlim</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/auth.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<header>
+  <div class="logo">
+    <a href="/index.html" class="logo-text">Durlim</a>
+  </div>
+  <nav>
+    <ul class="nav-links">
+      <li><a href="/index.html" class="nav-item">Home</a></li>
+      <li><a href="/index.html#message-board" class="nav-item">Message Board</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <div class="auth-container">
+    <div class="auth-card">
+      <h2>Register</h2>
+      <div id="authNotification"></div>
+      
+      <form id="registerForm" class="auth-form">
+        <div class="form-group">
+          <label for="username">
+            <i class="fas fa-user"></i> Username
+          </label>
+          <input type="text" id="username" name="username" required placeholder="Choose a username">
+        </div>
+        
+        <div class="form-group">
+          <label for="email">
+            <i class="fas fa-envelope"></i> Email
+          </label>
+          <input type="email" id="email" name="email" required placeholder="your@email.com">
+          <button type="button" id="sendCodeBtn" class="code-btn">Send Verification Code</button>
+        </div>
+        
+        <div class="form-group">
+          <label for="verificationCode">
+            <i class="fas fa-key"></i> Verification Code
+          </label>
+          <input type="text" id="verificationCode" name="verificationCode" placeholder="Enter verification code">
+        </div>
+        
+        <div class="form-group">
+          <label for="password">
+            <i class="fas fa-lock"></i> Password
+          </label>
+          <input type="password" id="password" name="password" required placeholder="At least 6 characters" minlength="6">
+        </div>
+        
+        <div class="form-group">
+          <label for="confirmPassword">
+            <i class="fas fa-lock"></i> Confirm Password
+          </label>
+          <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Confirm your password">
+        </div>
+        
+        <button type="submit" class="auth-btn">
+          <i class="fas fa-user-plus"></i> Register
+        </button>
+      </form>
+      
+      <div class="auth-footer">
+        <p>Already have an account? <a href="login.html">Login here</a></p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>&copy; 2024 durlim. All rights reserved.</p>
+</footer>
+
+<script src="../JS/api-config.js"></script>
+<script src="../JS/auth.js"></script>
+</body>
+</html>
+
