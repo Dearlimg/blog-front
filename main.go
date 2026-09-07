@@ -53,6 +53,7 @@ func main() {
 		&wallet.Transaction{},
 		&order.CartItem{},
 		&stat.VisitLog{},
+		&stat.VisitDetail{},
 	); err != nil {
 		slog.Error("auto migrate failed", "error", err)
 		os.Exit(1)

@@ -13,12 +13,47 @@ func NewService(repo *Repository) *Service {
 	return &Service{repo: repo}
 }
 
-func (s *Service) Record(ip string) {
+func (s *Service) Record(ip, path, ua string) {
 	date := today()
 	go func() {
 		s.repo.IncrPV(date)
 		s.repo.PfaddUV(date, ip)
+		if err := s.repo.InsertVisitDetail(&VisitDetail{
+			Date:      date,
+			IP:        ip,
+			Path:      truncate(path, 255),
+			UserAgent: truncate(ua, 512),
+		}); err != nil {
+			slog.Warn("record visit detail failed", "error", err)
+		}
 	}()
+}
+
+func truncate(s string, n int) string {
+	if len(s) > n {
+		return s[:n]
+	}
+	return s
+}
+
+// DetailRetention controls how long raw visit rows are kept.
+const detailRetention = 30 * 24 * time.Hour
+
+func (s *Service) Details(date string, page, pageSize int) *DetailsResp {
+	if page < 1 {
+		page = 1
+	}
+	if pageSize < 1 || pageSize > 100 {
+		pageSize = 20
+	}
+	items, total := s.repo.ListVisitDetails(date, page, pageSize)
+	return &DetailsResp{Total: total, Items: items}
+}
+
+func (s *Service) Cleanup() {
+	if err := s.repo.CleanupVisitDetails(time.Now().Add(-detailRetention)); err != nil {
+		slog.Warn("cleanup visit details failed", "error", err)
+	}
 }
 
 func (s *Service) Stats() *StatsResp {
@@ -70,11 +105,17 @@ func (s *Service) Sync() {
 
 func StartSyncLoop(svc *Service) {
 	svc.Sync()
+	svc.Cleanup()
 
+	lastClean := time.Now().Format("2006-01-02")
 	ticker := time.NewTicker(5 * time.Minute)
 	defer ticker.Stop()
 
 	for range ticker.C {
 		svc.Sync()
+		if d := time.Now().Format("2006-01-02"); d != lastClean {
+			lastClean = d
+			svc.Cleanup()
+		}
 	}
 }

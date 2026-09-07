@@ -2,6 +2,7 @@ package router
 
 import (
 	"blog-front/config"
+	"blog-front/internal/agent"
 	"blog-front/internal/comment"
 	"blog-front/internal/message"
 	"blog-front/internal/order"
@@ -10,6 +11,7 @@ import (
 	"blog-front/internal/user"
 	"blog-front/internal/wallet"
 	"blog-front/pkg/middleware"
+	"log/slog"
 
 	"github.com/gin-gonic/gin"
 	"github.com/redis/go-redis/v9"
@@ -31,7 +33,12 @@ func Setup(cfg *config.Config, db *gorm.DB, rdb *redis.Client) *gin.Engine {
 	r.Static("/static", "./static")
 	r.Static("/view", "./view")
 	r.StaticFile("/index.html", "./index.html")
+	r.GET("/agent", func(c *gin.Context) { c.File("./view/html/agent.html") })
 	r.GET("/", func(c *gin.Context) { c.File("./index.html") })
+
+	if err := agent.RegisterFromEnv(r); err != nil {
+		slog.Error("agent initialization failed; agent endpoints disabled")
+	}
 
 	userSvc := user.NewService(db, cfg.JWT.SecretKey, cfg.JWT.Expire)
 	commentSvc := comment.NewService(db)
@@ -52,6 +59,7 @@ func Setup(cfg *config.Config, db *gorm.DB, rdb *redis.Client) *gin.Engine {
 	api := r.Group("/api/v1")
 	{
 		api.GET("/stats", statH.Stats)
+		api.GET("/stats/details", statH.Details)
 
 		users := api.Group("/users")
 		{

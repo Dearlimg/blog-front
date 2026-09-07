@@ -4,3 +4,9 @@ blog.db
 .idea/
 *.log
 .codebuddy/
+.agent-data/
+.agent-secrets/
+.env
+.env.*
+!.env.example
+agent-server.exe

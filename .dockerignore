@@ -1,0 +1,9 @@
+.git
+.idea
+.codebuddy
+.agent-data
+.agent-secrets
+.env
+.env.*
+*.log
+*.exe

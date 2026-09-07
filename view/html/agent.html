@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <title>与 Durlim 聊聊</title>
+  <link rel="icon" href="/static/Ava.jpg">
+  <link rel="stylesheet" href="/view/css/agent.css?v=20260907">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="/index.html">durlim<span>.</span></a>
+    <button class="new-chat" id="new-chat"><i class="fas fa-plus" aria-hidden="true"></i> 新的对话</button>
+    <nav id="sessions" aria-label="对话历史"></nav>
+    <div class="side-bottom"><a href="/index.html"><i class="fas fa-arrow-left" aria-hidden="true"></i> 返回博客</a><button id="owner-toggle" class="icon" title="主人工作台" aria-label="主人工作台"><i class="fas fa-sliders" aria-hidden="true"></i></button></div>
+  </aside>
+  <main>
+    <header><div class="identity"><img src="/static/Ava.jpg" alt="Durlim 的头像" width="38" height="38"><div><strong>Durlim</strong><span>AI 分身 · 观点不代表本人</span></div></div><span id="connection" role="status">连接中</span></header>
+    <div id="conversation" class="conversation" aria-live="polite" aria-relevant="additions">
+      <section id="welcome" class="welcome"><span class="eyebrow">THINK CLEARLY. STAY CURIOUS.</span><h1>你好，我是 Durlim 的 AI 分身。</h1><p>XUPT 智能科学与技术专业学生。<br>在蚂蚁、腾讯实习过，正在准备校招。</p><div class="suggestions"><button data-prompt="聊聊你的项目经历">聊聊项目经历 <i class="fas fa-arrow-right" aria-hidden="true"></i></button><button data-prompt="帮我制定 Go 后端校招复习计划">准备后端校招 <i class="fas fa-arrow-right" aria-hidden="true"></i></button><button data-prompt="请联网查证 Go 最新稳定版本，并引用官方来源">一起查证一个问题 <i class="fas fa-arrow-right" aria-hidden="true"></i></button></div></section>
+    </div>
+    <div class="composer-wrap">
+      <div id="run-status" role="status"></div>
+      <details id="activity" hidden><summary>任务进度</summary><ol id="events"></ol><ul id="todos"></ul></details>
+      <div id="approvals"></div>
+      <form id="chat-form"><textarea id="prompt" rows="2" maxlength="8000" placeholder="有什么想聊的？" aria-label="消息" required></textarea><div class="composer-footer"><label><input id="goal-mode" type="checkbox"> 目标验收</label><button id="send" class="send icon" title="发送消息" aria-label="发送消息"><i class="fas fa-arrow-up" aria-hidden="true"></i></button><button id="cancel" class="icon" type="button" title="停止生成" aria-label="停止生成" hidden><i class="fas fa-stop" aria-hidden="true"></i></button></div><input id="goal" maxlength="2000" placeholder="完成标准，例如：计划覆盖网络、数据库与 Go，并给出可检查的每日任务" aria-label="目标完成标准" hidden></form>
+      <p class="privacy">回答可能有误，请核对引用来源。不要输入密码或公司机密。</p>
+    </div>
+  </main>
+  <dialog id="owner-dialog"><form method="dialog" class="dialog-header"><h2>主人工作台</h2><button class="icon" aria-label="关闭" title="关闭"><i class="fas fa-xmark" aria-hidden="true"></i></button></form><form id="owner-login"><label>主人令牌<input id="owner-token" type="password" autocomplete="off" required></label><button>连接</button></form><p id="owner-status" role="status"></p><section id="owner-tools" hidden><div class="owner-row"><button id="owner-refresh">刷新状态</button><button id="owner-logout">退出工作台</button></div><form id="job-form"><label>任务<textarea id="job-prompt" required maxlength="8000"></textarea></label><label>Cron<input id="job-cron" placeholder="留空表示后台执行；例如 0 9 * * 1-5"></label><button>创建任务</button></form><div id="owner-jobs"></div></section></dialog>
+  <script src="/view/JS/agent.js?v=20260907"></script>
+</body>
+</html>

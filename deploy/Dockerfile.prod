@@ -1,0 +1,18 @@
+# 生产镜像：直接使用本机交叉编译好的 Linux 静态二进制，服务器上不进行编译
+FROM alpine:3.20
+
+# 使用阿里云镜像源，避免官方源在服务器上拉包慢
+RUN sed -i 's#dl-cdn.alpinelinux.org#mirrors.aliyun.com#g' /etc/apk/repositories \
+    && apk add --no-cache ca-certificates tzdata
+
+WORKDIR /app
+
+COPY blog-front /app/blog-front
+COPY index.html /app/index.html
+COPY view /app/view
+COPY static /app/static
+COPY config/config.yaml /app/config/config.yaml
+
+EXPOSE 8080
+
+CMD ["./blog-front"]

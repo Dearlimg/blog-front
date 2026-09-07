@@ -90,3 +90,27 @@ func (r *Repository) ListAllMySQL(limit int) []VisitLog {
 	r.db.Order("date DESC").Limit(limit).Find(&logs)
 	return logs
 }
+
+// InsertVisitDetail stores one raw visit. Best-effort: callers log failures.
+func (r *Repository) InsertVisitDetail(d *VisitDetail) error {
+	return r.db.Create(d).Error
+}
+
+// ListVisitDetails paginates raw visits, optionally filtered by date.
+func (r *Repository) ListVisitDetails(date string, page, pageSize int) ([]VisitDetail, int64) {
+	var items []VisitDetail
+	var total int64
+
+	q := r.db.Model(&VisitDetail{})
+	if date != "" {
+		q = q.Where("date = ?", date)
+	}
+	q.Count(&total)
+	q.Order("id DESC").Offset((page - 1) * pageSize).Limit(pageSize).Find(&items)
+	return items, total
+}
+
+// CleanupVisitDetails removes raw visit rows older than the retention window.
+func (r *Repository) CleanupVisitDetails(before time.Time) error {
+	return r.db.Where("created_at < ?", before).Delete(&VisitDetail{}).Error
+}

@@ -11,7 +11,7 @@ func Middleware(svc *Service) gin.HandlerFunc {
 		c.Next()
 
 		if shouldRecord(c) {
-			svc.Record(c.ClientIP())
+			svc.Record(c.ClientIP(), c.Request.URL.Path, c.Request.UserAgent())
 		}
 	}
 }

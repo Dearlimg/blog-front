@@ -6,6 +6,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const historyBody = document.getElementById('historyBody')
     const toggleHistory = document.getElementById('toggleHistory')
     const historyTable = document.getElementById('historyTable')
+    const detailsBody = document.getElementById('detailsBody')
+    const toggleDetails = document.getElementById('toggleDetails')
+    const detailsTable = document.getElementById('detailsTable')
 
     if (toggleHistory && historyTable) {
         toggleHistory.addEventListener('click', () => {
@@ -14,7 +17,16 @@ document.addEventListener("DOMContentLoaded", () => {
         })
     }
 
+    if (toggleDetails && detailsTable) {
+        toggleDetails.addEventListener('click', () => {
+            const visible = detailsTable.style.display !== 'none'
+            detailsTable.style.display = visible ? 'none' : 'block'
+            if (!visible) loadDetails()
+        })
+    }
+
     loadStats()
+    if (detailsTable) loadDetails()
 
     async function loadStats() {
         try {
@@ -34,6 +46,21 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         } catch (e) {
             console.error('load stats failed', e)
+        }
+    }
+
+    async function loadDetails() {
+        if (!detailsBody) return
+        try {
+            const resp = await API.get('/stats/details?page=1&page_size=50')
+            const items = (resp.data && resp.data.items) || []
+            detailsBody.innerHTML = items.map(r => {
+                const time = r.created_at ? new Date(r.created_at).toLocaleString() : r.date
+                return `<tr><td>${time}</td><td>${r.ip}</td><td>${r.path || '-'}</td></tr>`
+            }).join('') || '<tr><td colspan="3">No data</td></tr>'
+        } catch (e) {
+            console.error('load details failed', e)
+            detailsBody.innerHTML = '<tr><td colspan="3">Load failed</td></tr>'
         }
     }
 })
