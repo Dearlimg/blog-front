@@ -10,3 +10,6 @@ blog.db
 .env.*
 !.env.example
 agent-server.exe
+blog-front
+data
+*.exe~
